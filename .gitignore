@@ -132,4 +132,4 @@ dmypy.json
 .DS_Store
 /output
 Web-Scraping_Git.ipynb
-pulls
+pulls.json
