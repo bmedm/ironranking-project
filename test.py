@@ -9,70 +9,36 @@ load_dotenv()
 apiKey = os.getenv("ApiKeyGit")
 print("WE HAVE APIKEY") if apiKey else print("NO APIKEY FOUND")
 
-def get_lastpull(endpoint, apiKey=os.getenv("ApiKeyGit"), query_params={}):
-    baseUrl = "https://api.github.com"
-    url = f"{baseUrl}{endpoint}"
-    headers = {"Authorization": f"token {apiKey}"}
-    res = requests.get(url,params=query_params,headers=headers)
-    data = res.json()
-    return data
-
-
-
-def get_gh_data(i, apiKey=os.getenv("ApiKeyGit")):
-    
-    url = f"https://api.github.com/repos/ironhack-datalabs/datamad0820/pulls/{i}"
-    headers = {"Authorization": f"token {apiKey}"}
-    res = requests.get(url, headers=headers)
-    data = res.json()
-    print(res.url)
-    try:
-        return{
-            'Lab_id':data['id'],
-            'Username':data['user']['login'],
-            'User_id':data['user']['id'],
-            'Lab':data['title'].replace(" ","").split("]")[0].strip("["),
-            'State':data['state'],
-            'Update':data['created_at'],
-            'Closed':data['closed_at'],
-            'Comment_url':data['comments_url']
-        }
-    except:
-        return {"Lab_id": None}
-        
-lastdata=get_lastpull("/repos/ironhack-datalabs/datamad0820/pulls",query_params={"per_page":2})
-last=lastdata[0]["number"]
-int(last)
-
-data = [get_gh_data(i) for i in range(1,3)]
-
-def shared(comment):
-    share=[]
-    for i in comment:
-        return share.append(re.findall(r"@\w*-?\w+" ,i["body"]))
-    
 def meme(comment):
     try:
-        try:
-            z = re.findall(r'https:.*jpg|.*png|.*jpeg',comment[0]['body'])
-            z = str(z).split('(')
-            z = z[1].split("'")
-            return z[0]
-        except: 
-            z = re.findall(r'https:.*jpg|.*png|.*jpeg',comment[0]['body'])
-            z = str(z).split('(')
-            return z[0]
+        meme=[]
+        for i in comment:
+            meme.append(re.findall(r"https:.*png|.*jpg" ,i["body"]))
+        
+        for i in meme:
+            for x in i:
+                x=x.split("]")
+                if len(x)>1:
+                    x=x[1].strip("(")
+                else:
+                    x=x[0]
+        return x
     except:
         return None
-    
-def union(datos1, datos2):
-    for i in datos1:
-        for x in datos2:
-            i.update(x)
-    return datos1
-def teacher(comment):
+def shared(comment):
     try:
-        return comment[0]["user"]["login"]
+        share=[]
+        for i in comment:
+            share.append(re.findall(r"@\w*-?\w+" ,i["body"]))
+        return share
+    except:
+        return None  
+def teacher(comment):
+    teacher=[]
+    try:
+        for i in comment:
+            teacher.append(i["user"]["login"])
+        return teacher[0]
     except:
         return None
 
@@ -82,16 +48,47 @@ def get_issues(x, apiKey=os.getenv("ApiKeyGit")):
     res = requests.get(url, headers=headers)
     comment = res.json()
     print(res.url)
-    return {"Teacher":teacher(comment),
-            "Meme":meme(comment),
-            "Collaborator":shared(comment)
+    return comment
+
+def get_lastpull(endpoint, apiKey=os.getenv("ApiKeyGit"), query_params={}):
+    baseUrl = "https://api.github.com"
+    url = f"{baseUrl}{endpoint}"
+    headers = {"Authorization": f"token {apiKey}"}
+    res = requests.get(url,params=query_params,headers=headers)
+    data = res.json()
+    return data
+
+def get_gh_data(i, apiKey=os.getenv("ApiKeyGit")):
+    
+    url = f"https://api.github.com/repos/ironhack-datalabs/datamad0820/pulls/{i}"
+    headers = {"Authorization": f"token {apiKey}"}
+    res = requests.get(url, headers=headers)
+    data = res.json()
+    print(res.url)
+    comment= get_issues(i)
+    try:
+        return{
+            'Lab_id':data['id'],
+            'Lab_number':data['number'],
+            'Username':data['user']['login'],
+            'User_id':data['user']['id'],
+            'Lab':data['title'].replace(" ","").split("]")[0].strip("["),
+            'State':data['state'],
+            'Update':data['created_at'],
+            'Closed':data['closed_at'],
+            'Comment_url':data['comments_url'],
+            'Teacher':teacher(comment),
+            'Meme':meme(comment),
+            'Collaborator':shared(comment)
+            
             }
+    except:
+        return {"Lab_id": None}
 
-data2=[get_issues(i) for i in range(1,3)]
+lastdata=get_lastpull("/repos/ironhack-datalabs/datamad0820/pulls",query_params={"per_page":2})
+last=lastdata[0]["number"]
+int(last)
+        
+data = [get_gh_data(i) for i in range(1,(last+1))]
 
-data=union(data,data2)
-
-
-jsn=pd.DataFrame(data)
-jsn.to_json('pulls.json',orient="records")
 
