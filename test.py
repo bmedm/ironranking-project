@@ -5,11 +5,16 @@ import os
 from dotenv import load_dotenv
 import pandas as pd
 load_dotenv()
-
+#obtenemos apiKey para GitHub
 apiKey = os.getenv("ApiKeyGit")
 print("WE HAVE APIKEY") if apiKey else print("NO APIKEY FOUND")
+#Definimos las diferentes funciones para obtener información de la api de GitHub
 
 def meme(comment):
+    """
+    Limpia de la api el comentario para obtener solamente la URL 
+    del meme
+    """
     try:
         meme=[]
         for i in comment:
@@ -26,14 +31,22 @@ def meme(comment):
     except:
         return None
 def shared(comment):
+    """
+    Limpia de la api el comentario para obtener solamente el usuario
+    con el que ha trabajado el estudiante
+    """
     try:
         share=[]
         for i in comment:
             share.append(re.findall(r"@\w*-?\w+" ,i["body"]))
         return share
     except:
-        return None  
+        return None 
+
 def teacher(comment):
+    """
+    Obtiene el nombre de usuario del profesor que corrige cada pull request
+    """
     teacher=[]
     try:
         for i in comment:
@@ -42,7 +55,10 @@ def teacher(comment):
     except:
         return None
 
-def get_issues(x, apiKey=os.getenv("ApiKeyGit")):  
+def get_issues(x, apiKey=os.getenv("ApiKeyGit")):
+    """
+    Hace la llamada a la api, concretamente al comentario de la pull request
+    """
     url = f"https://api.github.com/repos/ironhack-datalabs/datamad0820/issues/{x}/comments"
     headers = {"Authorization": f"token {apiKey}"}
     res = requests.get(url, headers=headers)
@@ -51,6 +67,9 @@ def get_issues(x, apiKey=os.getenv("ApiKeyGit")):
     return comment
 
 def get_lastpull(endpoint, apiKey=os.getenv("ApiKeyGit"), query_params={}):
+    """
+    LLama a la api de GitHub
+    """
     baseUrl = "https://api.github.com"
     url = f"{baseUrl}{endpoint}"
     headers = {"Authorization": f"token {apiKey}"}
@@ -59,6 +78,9 @@ def get_lastpull(endpoint, apiKey=os.getenv("ApiKeyGit"), query_params={}):
     return data
 
 def get_gh_data(i, apiKey=os.getenv("ApiKeyGit")):
+    """
+    LLama a la api e iteramos por ella para obtener todas
+    """
     
     url = f"https://api.github.com/repos/ironhack-datalabs/datamad0820/pulls/{i}"
     headers = {"Authorization": f"token {apiKey}"}

@@ -17,33 +17,35 @@ ______________
 
 ## **Pero...¿cómo se utiliza?**
 
-La url de base de la API sería *http://0.0.0.0:3000* ya que el Puerto 3000 es el que hemos utilizado en el local.
 
 ### **Endpoints:**
 La API cuenta con 5 endpoints:
-- **/student/create/**(*ESTUDIANTE*):
+1.  **/student/create/**(*ESTUDIANTE*):
 
 Este endopoint crea en la base de datos directamente un nuevo estudiante. ¡El que tu elijas!
-- **/student/all**: 
+
+2.  **/student/all**: 
 
 Muestra una lista de todos los estudiantes que pertenecen a esta edición del bootcamp
-- **/lab/create/**(*ESTUDIANTE*): 
+
+3.  **/lab/create/**(*ESTUDIANTE*): 
 
 Al igual que el primero, crea un lab nuevo en la base de datos con el nombre que tu elijas.
-- **/lab/**( *NOMBRE DEL LAB*)**/meme**:(Empieza lo interesante)
+
+4.  **/lab/**( *NOMBRE DEL LAB*)**/meme**:(Empieza lo interesante)
 
 Mostrará la URL de un meme aleatorio elegido entre todas las pull request del lab elegido.
 
-- **"/lab/**( *NOMBRE DEL LAB*)**/search**:
+5.  **"/lab/**( *NOMBRE DEL LAB*)**/search**:
 
 Muestra una serie de datos como el número de pull request abiertas o cerradas, una lista de memes utilizados en el lab, y el tiempo del profesor para corregir cada lab.
 
-------
 -------
 
 <p align="center">
-  <img width="300" height="200" src="https://user-images.githubusercontent.com/57899051/92743489-def23480-f380-11ea-950f-939509b20ae0.jpg">
+  <img width="300" height="250" src="https://user-images.githubusercontent.com/57899051/92743489-def23480-f380-11ea-950f-939509b20ae0.jpg">
 </p>
+
 
 
 
