@@ -41,8 +41,10 @@ Muestra una serie de datos como el número de pull request abiertas o cerradas, 
 ------
 -------
 
+<p align="center">
+  <img width="300" height="200" src="https://user-images.githubusercontent.com/57899051/92743489-def23480-f380-11ea-950f-939509b20ae0.jpg">
+</p>
 
-<img align="center" width="300" height="200" src=https://user-images.githubusercontent.com/57899051/92743489-def23480-f380-11ea-950f-939509b20ae0.jpg>
 
 
 
