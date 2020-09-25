@@ -17,8 +17,13 @@ ______________
 
 ## **Pero...¿cómo se utiliza?**
 
+Se ha creado una base de datos con la información recogida de la API de github, para ello se ha realizado una busqueda y limpieza para obtener lo que se necesitaba.(En el arcivo [test.py](https://github.com/bmedm/ironranking-project/blob/master/test.py))
 
-### **Endpoints:**
+Una vez obtenidos los datos se importan a MongoDb para conectar la Api con nuestra base de datos.
+
+
+
+### **Endpoints creados:**
 La API cuenta con 5 endpoints:
 1.  **/student/create/**(*ESTUDIANTE*):
 
