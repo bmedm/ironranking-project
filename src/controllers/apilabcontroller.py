@@ -32,7 +32,7 @@ def randommeme(lab_id):
         ])
         return dumps(res)
     
-    return "No existe el Lab nombrado, introduce uno correcto por favor! :)"
+    return {"Error":"No existe el Lab nombrado, introduce uno correcto por favor! :)"}
 
 
 
@@ -51,18 +51,18 @@ def allStatistics(labname):
             cl = datetime.fromisoformat(i['Closed'].replace('Z',''))
             grade_time_list.append((cl-op).total_seconds())
    
-        res = {'-El numero de PR abiertas es:': opened_pr,
-               '-El numero de PR cerradas es:': closed_pr,
-               '-El porcentaje closed es:':f' {round(closed_pr/(opened_pr+closed_pr)*100,2)} %',
-               '-El porcentaje open es:': f'{round(opened_pr/(opened_pr+closed_pr)*100,2)}%',
-               '-La lista de memes únicos es:':meme,
-               '-El tiempo máximo de correccion es: ': (f'{str(round(max(grade_time_list)/3600,2))}h'),
-               '-El tiempo mínimo de correccion es: ': (f'{str(round(min(grade_time_list)/3600,2))}h'),
-               '-La media de tiempo de corrección del lab es: ': (f'{str(round(np.mean(grade_time_list)/3600,2))}h')
+        res = {'Open_pr': opened_pr,
+               'Closed_pr': closed_pr,
+               'percent_cl':f' {round(closed_pr/(opened_pr+closed_pr)*100,2)} %',
+               'percent_op': f'{round(opened_pr/(opened_pr+closed_pr)*100,2)}%',
+               'unique_memes':meme,
+               'Timemax_correct': (f'{str(round(max(grade_time_list)/3600,2))}h'),
+               'Timemin_correct': (f'{str(round(min(grade_time_list)/3600,2))}h'),
+               'Timemean_correct': (f'{str(round(np.mean(grade_time_list)/3600,2))}h')
             }
-        return dumps(res)
+        return res
     
-    return "No existe el Lab nombrado, introduce uno correcto por favor! :)"
+    return {"Error":"No existe el Lab nombrado, introduce uno correcto por favor! :)"}
 
 
 

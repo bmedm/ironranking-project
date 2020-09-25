@@ -79,7 +79,8 @@ def get_lastpull(endpoint, apiKey=os.getenv("ApiKeyGit"), query_params={}):
 
 def get_gh_data(i, apiKey=os.getenv("ApiKeyGit")):
     """
-    LLama a la api e iteramos por ella para obtener todas
+    LLama a la api e iteramos por ella para obtener todas los datos
+    para nuestra base de datos
     """
     
     url = f"https://api.github.com/repos/ironhack-datalabs/datamad0820/pulls/{i}"
