@@ -13,11 +13,17 @@ def welcome():
         "status": "OK",
         "message": "Welcome to Ironranking"
     }
-
+@app.route("/student/create/", defaults = {"studentname": None})
 @app.route("/student/create/<studentname>")
 def createStudent(studentname):
-    res=db.pull.insert_one({"Username": studentname}).inserted_id
-    return dumps(res)
+    if studentname == None:
+        return {
+            "status": "Error HTTP 400 (Bad Request)",
+            "message": "ara crear un lab, inserte uno"
+        }
+    else:
+        res=db.pull.insert_one({"Username": studentname}).inserted_id
+        return f'Se ha creado un nuevo registro --> "Username": {studentname}'
 
 @app.route("/student/all")
 @asJsonResponse
